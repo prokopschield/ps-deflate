@@ -1,3 +1,7 @@
+mod error;
+
+pub use error::PsDeflateError;
+
 use std::cell::Cell;
 
 fn alloc_compressor() -> libdeflater::Compressor {
@@ -52,7 +56,7 @@ impl Compressor {
         }
     }
 
-    pub fn compress(&self, data: &[u8]) -> Result<Vec<u8>, libdeflater::CompressionError> {
+    pub fn compress(&self, data: &[u8]) -> Result<Vec<u8>, PsDeflateError> {
         let out_size = data.len() + 5;
         let mut compressor = get_compressor(&self.compressor);
         let mut out_data = Vec::with_capacity(out_size);
@@ -72,11 +76,7 @@ impl Compressor {
         Ok(out_data)
     }
 
-    pub fn decompress(
-        &self,
-        data: &[u8],
-        out_size: usize,
-    ) -> Result<Vec<u8>, libdeflater::DecompressionError> {
+    pub fn decompress(&self, data: &[u8], out_size: usize) -> Result<Vec<u8>, PsDeflateError> {
         let mut out_data = Vec::with_capacity(out_size);
 
         unsafe { out_data.set_len(out_size) };
