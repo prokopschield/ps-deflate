@@ -1,0 +1,11 @@
+[package]
+name = "ps-deflate"
+description = "Object wrapper around libdeflater"
+version = "0.1.0-1"
+edition = "2021"
+license = "GPL-3.0-or-later"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libdeflater = "1.20.0"
