@@ -1,6 +1,10 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+use thiserror::Error;
+
+#[derive(Error, Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum PsDeflateError {
+    #[error("Decompression error: invalid data")]
     BadData,
+    #[error("Insufficient buffer size, output too large")]
     InsufficientSpace,
 }
 
