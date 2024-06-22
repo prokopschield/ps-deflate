@@ -56,18 +56,23 @@ impl Compressor {
         }
     }
 
+    pub fn compress_into(&self, data: &[u8], out_data: &mut [u8]) -> Result<usize, PsDeflateError> {
+        let mut compressor = get_compressor(&self.compressor);
+
+        let result = compressor.deflate_compress(data, out_data);
+
+        put_compressor(&self.compressor, compressor);
+
+        Ok(result?)
+    }
+
     pub fn compress(&self, data: &[u8]) -> Result<Vec<u8>, PsDeflateError> {
         let out_size = data.len() + 5;
-        let mut compressor = get_compressor(&self.compressor);
         let mut out_data = Vec::with_capacity(out_size);
 
         unsafe { out_data.set_len(out_size) };
 
-        let result = compressor.deflate_compress(data, out_data.as_mut_slice());
-
-        put_compressor(&self.compressor, compressor);
-
-        let size = result?;
+        let size = self.compress_into(data, out_data.as_mut_slice())?;
 
         if size < out_size {
             unsafe { out_data.set_len(size) };
