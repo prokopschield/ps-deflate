@@ -6,9 +6,8 @@ use std::cell::Cell;
 
 fn alloc_compressor() -> libdeflater::Compressor {
     let level = libdeflater::CompressionLvl::best();
-    let compressor = libdeflater::Compressor::new(level);
 
-    return compressor;
+    libdeflater::Compressor::new(level)
 }
 
 fn get_compressor(cell: &Cell<Option<libdeflater::Compressor>>) -> libdeflater::Compressor {
