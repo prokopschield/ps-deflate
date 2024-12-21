@@ -1,6 +1,7 @@
 mod error;
 
 pub use error::PsDeflateError;
+use ps_buffer::Buffer;
 
 use std::cell::Cell;
 
@@ -65,16 +66,14 @@ impl Compressor {
         Ok(result?)
     }
 
-    pub fn compress(&self, data: &[u8]) -> Result<Vec<u8>, PsDeflateError> {
+    pub fn compress(&self, data: &[u8]) -> Result<Buffer, PsDeflateError> {
         let out_size = data.len() + 5;
-        let mut out_data = Vec::with_capacity(out_size);
+        let mut out_data = Buffer::alloc(out_size);
 
-        unsafe { out_data.set_len(out_size) };
-
-        let size = self.compress_into(data, out_data.as_mut_slice())?;
+        let size = self.compress_into(data, &mut out_data)?;
 
         if size < out_size {
-            unsafe { out_data.set_len(size) };
+            out_data.resize(size);
         }
 
         Ok(out_data)
@@ -94,15 +93,13 @@ impl Compressor {
         Ok(result?)
     }
 
-    pub fn decompress(&self, data: &[u8], out_size: usize) -> Result<Vec<u8>, PsDeflateError> {
-        let mut out_data = Vec::with_capacity(out_size);
+    pub fn decompress(&self, data: &[u8], out_size: usize) -> Result<Buffer, PsDeflateError> {
+        let mut out_data = Buffer::alloc(out_size);
 
-        unsafe { out_data.set_len(out_size) };
-
-        let size = self.decompress_into(data, out_data.as_mut_slice())?;
+        let size = self.decompress_into(data, &mut out_data)?;
 
         if size < out_size {
-            unsafe { out_data.set_len(size) };
+            out_data.resize(size);
         }
 
         Ok(out_data)

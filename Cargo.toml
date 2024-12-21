@@ -13,4 +13,5 @@ opt-level = 3
 
 [dependencies]
 libdeflater = "1.20.0"
+ps-buffer = "0.1.0-2"
 thiserror = "1.0.61"
