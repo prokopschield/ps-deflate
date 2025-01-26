@@ -13,6 +13,6 @@ opt-level = 3
 
 [dependencies]
 libdeflater = "1.20.0"
-ps-buffer = "0.1.0-4"
+ps-buffer = "0.1.0-6"
 rayon = "1.10.0"
 thiserror = "1.0.61"

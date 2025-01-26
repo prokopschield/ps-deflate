@@ -18,12 +18,12 @@ pub fn compress_into(data: &[u8], out_data: &mut [u8]) -> Result<usize, PsDeflat
 
 pub fn compress(data: &[u8]) -> Result<Buffer, PsDeflateError> {
     let out_size = data.len() + 5;
-    let mut out_data = Buffer::alloc(out_size);
+    let mut out_data = Buffer::alloc_uninit(out_size)?;
 
     let size = compress_into(data, &mut out_data)?;
 
     if size < out_size {
-        out_data.resize(size);
+        out_data.truncate(size);
     }
 
     Ok(out_data)
@@ -34,12 +34,12 @@ pub fn decompress_into(data: &[u8], out_data: &mut [u8]) -> Result<usize, PsDefl
 }
 
 pub fn decompress(data: &[u8], out_size: usize) -> Result<Buffer, PsDeflateError> {
-    let mut out_data = Buffer::alloc(out_size);
+    let mut out_data = Buffer::alloc_uninit(out_size)?;
 
     let size = decompress_into(data, &mut out_data)?;
 
     if size < out_size {
-        out_data.resize(size);
+        out_data.truncate(size);
     }
 
     Ok(out_data)

@@ -1,7 +1,10 @@
+use ps_buffer::BufferError;
 use thiserror::Error;
 
-#[derive(Error, Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Error, Debug, Clone, PartialEq, Eq)]
 pub enum PsDeflateError {
+    #[error(transparent)]
+    BufferError(#[from] BufferError),
     #[error("Decompression error: invalid data")]
     BadData,
     #[error("Insufficient buffer size, output too large")]
