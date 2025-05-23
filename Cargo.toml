@@ -1,18 +1,18 @@
 [package]
 name = "ps-deflate"
-description = "Object wrapper around libdeflater"
 version = "0.1.0-12"
 edition = "2021"
+description = "Object wrapper around libdeflater"
 license = "GPL-3.0-or-later"
-
-[profile.dev]
-opt-level = 3
-
-[profile.release]
-opt-level = 3
 
 [dependencies]
 libdeflater = "1.23.1"
 ps-buffer = "0.1.0-17"
 rayon = "1.10.0"
 thiserror = "2.0.12"
+
+[profile.dev]
+opt-level = 3
+
+[profile.release]
+opt-level = 3
