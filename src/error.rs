@@ -14,7 +14,7 @@ pub enum PsDeflateError {
 impl From<libdeflater::CompressionError> for PsDeflateError {
     fn from(error: libdeflater::CompressionError) -> Self {
         match error {
-            libdeflater::CompressionError::InsufficientSpace => PsDeflateError::InsufficientSpace,
+            libdeflater::CompressionError::InsufficientSpace => Self::InsufficientSpace,
         }
     }
 }
@@ -22,8 +22,8 @@ impl From<libdeflater::CompressionError> for PsDeflateError {
 impl From<libdeflater::DecompressionError> for PsDeflateError {
     fn from(error: libdeflater::DecompressionError) -> Self {
         match error {
-            libdeflater::DecompressionError::BadData => PsDeflateError::BadData,
-            libdeflater::DecompressionError::InsufficientSpace => PsDeflateError::InsufficientSpace,
+            libdeflater::DecompressionError::BadData => Self::BadData,
+            libdeflater::DecompressionError::InsufficientSpace => Self::InsufficientSpace,
         }
     }
 }
