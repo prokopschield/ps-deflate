@@ -6,8 +6,8 @@ description = "Object wrapper around libdeflater"
 license = "GPL-3.0-or-later"
 
 [dependencies]
-libdeflater = "1.23.1"
-ps-buffer = "0.1.0-17"
+libdeflater = "1.24.0"
+ps-buffer = "0.1.0-18"
 rayon = "1.10.0"
 thiserror = "2.0.12"
 
